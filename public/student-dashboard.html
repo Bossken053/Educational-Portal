@@ -1,0 +1,565 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard | FHOBS SOLUTIONS</title>
+    <link rel="stylesheet" href="/css/student-dashboard.css">
+
+    <style>
+        .security-card {
+            max-width: 760px;
+        }
+
+        .security-intro {
+            margin: 0 0 22px;
+            color: #7b8798;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .security-notice {
+            display: none;
+            margin-bottom: 18px;
+            padding: 13px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            line-height: 1.7;
+            overflow-wrap: anywhere;
+        }
+
+        .security-notice.success {
+            display: block;
+            color: #13764d;
+            background: #e2f6ed;
+        }
+
+        .security-notice.error {
+            display: block;
+            color: #b42318;
+            background: #fde8e7;
+        }
+
+        .password-form {
+            display: grid;
+            gap: 19px;
+        }
+
+        .password-field {
+            display: grid;
+            gap: 8px;
+        }
+
+        .password-field label {
+            color: #243247;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .password-field input {
+            width: 100%;
+            min-height: 45px;
+            padding: 12px 13px;
+            border: 1px solid #d9e2ef;
+            border-radius: 8px;
+            outline: none;
+            color: #243247;
+            background: #fff;
+            font: inherit;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .password-field input:focus {
+            border-color: #2874c8;
+            box-shadow: 0 0 0 3px #2874c81a;
+        }
+
+        .password-help {
+            margin: 0;
+            color: #7b8798;
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .password-submit {
+            justify-self: start;
+            min-height: 43px;
+            padding: 12px 19px;
+            border: 0;
+            border-radius: 8px;
+            color: #fff;
+            background: #2874c8;
+            font: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .password-submit:hover {
+            background: #1d5fa7;
+        }
+
+        .password-submit:disabled {
+            opacity: .65;
+            cursor: not-allowed;
+        }
+
+        .security-reminder {
+            margin-top: 24px;
+            padding: 15px;
+            border-left: 4px solid #6da8e9;
+            border-radius: 6px;
+            color: #345775;
+            background: #edf5ff;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 480px) {
+            .password-submit {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <a href="/" class="brand">
+            <span class="brand-icon">F</span>
+            <span class="brand-text">
+                <strong>FHOBS SOLUTIONS</strong>
+                <small>Student Portal</small>
+            </span>
+        </a>
+
+        <div class="sidebar-label">MENU</div>
+
+        <nav class="navigation">
+            <a href="#overview" class="nav-link active" data-section="overview">
+                <span class="nav-icon">▦</span> Overview
+            </a>
+            <a href="#my-profile" class="nav-link" data-section="my-profile">
+                <span class="nav-icon">♙</span> My Profile
+            </a>
+            <a href="#my-programme" class="nav-link" data-section="my-programme">
+                <span class="nav-icon">▤</span> My Programme
+            </a>
+            <a href="#account" class="nav-link" data-section="account">
+                <span class="nav-icon">✓</span> Account Status
+            </a>
+            <a href="#security" class="nav-link" data-section="security">
+                <span class="nav-icon">🔒</span> Security & Password
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="help-card">
+                <span class="help-icon">?</span>
+                <strong>Need assistance?</strong>
+                <p>Contact the FHOBS SOLUTIONS administrator for account support.</p>
+            </div>
+
+            <button type="button" id="logoutBtn" class="logout-btn">
+                <span>↪</span> Log Out
+            </button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <button type="button" id="menuBtn" class="menu-btn"
+                    aria-label="Toggle navigation">☰</button>
+
+            <div class="topbar-title">
+                <span class="topbar-label">STUDENT PORTAL</span>
+                <h1 id="pageHeading">Dashboard Overview</h1>
+            </div>
+
+            <div class="topbar-right">
+                <div class="online-indicator">
+                    <span></span> Student Account
+                </div>
+                <div class="topbar-avatar" id="topAvatar">S</div>
+            </div>
+        </header>
+
+        <div id="notice" class="notice" role="status"
+             aria-live="polite" hidden></div>
+
+        <!-- OVERVIEW -->
+        <section id="overview" class="page-section">
+            <div class="hero-card">
+                <div class="hero-content">
+                    <span class="hero-tag">WELCOME TO YOUR PORTAL</span>
+                    <h2>Hello, <span id="welcomeName">Student</span>!</h2>
+                    <p>
+                        Your learning journey starts here. View your profile,
+                        review your programme selections, and check your account.
+                    </p>
+                    <button type="button" class="hero-button" id="viewProgrammeBtn">
+                        View My Programme <span>→</span>
+                    </button>
+                </div>
+
+                <div class="hero-decoration" aria-hidden="true">
+                    <div class="decoration-circle">
+                        <div class="decoration-book">▤</div>
+                    </div>
+                    <span class="decoration-dot dot-one"></span>
+                    <span class="decoration-dot dot-two"></span>
+                </div>
+            </div>
+
+            <div class="section-heading">
+                <div>
+                    <h2>Your Overview</h2>
+                    <p>A quick summary of your student account.</p>
+                </div>
+            </div>
+
+            <div class="summary-grid">
+                <article class="summary-card">
+                    <div class="summary-icon icon-blue">♙</div>
+                    <div>
+                        <span class="summary-label">Account Type</span>
+                        <strong id="roleSummary">Student</strong>
+                        <small>Your registered role</small>
+                    </div>
+                </article>
+
+                <article class="summary-card">
+                    <div class="summary-icon icon-green">✓</div>
+                    <div>
+                        <span class="summary-label">Email Status</span>
+                        <strong id="verificationSummary">Checking...</strong>
+                        <small>Email verification</small>
+                    </div>
+                </article>
+
+                <article class="summary-card">
+                    <div class="summary-icon icon-purple">▤</div>
+                    <div>
+                        <span class="summary-label">Selected Course</span>
+                        <strong id="courseSummary">Loading...</strong>
+                        <small>Your chosen programme</small>
+                    </div>
+                </article>
+
+                <article class="summary-card">
+                    <div class="summary-icon icon-orange">☆</div>
+                    <div>
+                        <span class="summary-label">Selected Exam</span>
+                        <strong id="examSummary">Loading...</strong>
+                        <small>Optional examination</small>
+                    </div>
+                </article>
+            </div>
+
+            <div class="content-grid">
+                <article class="panel profile-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <h2>Student Profile</h2>
+                            <p>Your personal information</p>
+                        </div>
+                        <span class="panel-symbol">♙</span>
+                    </div>
+
+                    <div class="profile-header">
+                        <div class="passport-frame">
+                            <img id="passportImage" alt="Student passport photograph" hidden>
+                            <div id="passportFallback" class="passport-fallback">S</div>
+                        </div>
+
+                        <div class="profile-heading-text">
+                            <h3 id="profileName">Loading profile...</h3>
+                            <p id="profileEmail">Loading email...</p>
+                            <span class="role-pill">STUDENT</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-info">
+                        <div class="info-item">
+                            <span>Full Name</span>
+                            <strong id="fullName">Loading...</strong>
+                        </div>
+                        <div class="info-item">
+                            <span>Phone Number</span>
+                            <strong id="phone">Loading...</strong>
+                        </div>
+                        <div class="info-item">
+                            <span>Email Address</span>
+                            <strong id="email">Loading...</strong>
+                        </div>
+                        <div class="info-item">
+                            <span>Registration Date</span>
+                            <strong id="createdAt">Loading...</strong>
+                        </div>
+                    </div>
+
+                    <button type="button" class="outline-button"
+                            data-open-section="my-profile">
+                        View Full Profile →
+                    </button>
+                </article>
+
+                <article class="panel programme-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <h2>My Programme</h2>
+                            <p>Your registration selections</p>
+                        </div>
+                        <span class="panel-symbol">▤</span>
+                    </div>
+
+                    <div class="programme-block">
+                        <div class="programme-icon">▤</div>
+                        <div class="programme-details">
+                            <span>SELECTED COURSE</span>
+                            <h3 id="selectedCourse">Loading...</h3>
+                            <p>Your registered course</p>
+                        </div>
+                    </div>
+
+                    <div class="programme-divider"></div>
+
+                    <div class="programme-block">
+                        <div class="programme-icon exam-icon">☆</div>
+                        <div class="programme-details">
+                            <span>SELECTED EXAM</span>
+                            <h3 id="selectedExam">Loading...</h3>
+                            <p id="examDescription">Optional examination selection</p>
+                        </div>
+                    </div>
+
+                    <button type="button" class="outline-button"
+                            data-open-section="my-programme">
+                        View Programme Details →
+                    </button>
+                </article>
+            </div>
+
+            <div class="bottom-banner">
+                <div class="banner-icon">✦</div>
+                <div>
+                    <h3>Keep moving towards your goals!</h3>
+                    <p>Keep your account information up to date and check your email verification status.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FULL PROFILE -->
+        <section id="my-profile" class="page-section" hidden>
+            <article class="panel full-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>My Profile</h2>
+                        <p>Your registered personal information.</p>
+                    </div>
+                    <span class="panel-symbol">♙</span>
+                </div>
+
+                <div class="large-profile-header">
+                    <div class="passport-frame large-passport">
+                        <img id="profilePassportImage" alt="Student passport photograph" hidden>
+                        <div id="profilePassportFallback" class="passport-fallback">S</div>
+                    </div>
+                    <div>
+                        <h2 id="fullProfileName">Loading...</h2>
+                        <p id="fullProfileEmail">Loading...</p>
+                        <span class="role-pill">REGISTERED STUDENT</span>
+                    </div>
+                </div>
+
+                <div class="profile-info full-profile-info">
+                    <div class="info-item">
+                        <span>Full Name</span>
+                        <strong id="detailFullName">Loading...</strong>
+                    </div>
+                    <div class="info-item">
+                        <span>Email Address</span>
+                        <strong id="detailEmail">Loading...</strong>
+                    </div>
+                    <div class="info-item">
+                        <span>Phone Number</span>
+                        <strong id="detailPhone">Loading...</strong>
+                    </div>
+                    <div class="info-item">
+                        <span>Account Role</span>
+                        <strong id="detailRole">Student</strong>
+                    </div>
+                    <div class="info-item">
+                        <span>Account Created</span>
+                        <strong id="detailCreatedAt">Loading...</strong>
+                    </div>
+                    <div class="info-item">
+                        <span>Email Verification</span>
+                        <strong id="detailVerification">Loading...</strong>
+                    </div>
+                </div>
+
+                <p class="information-note">
+                    For changes to your registered details, contact the FHOBS SOLUTIONS administrator.
+                </p>
+            </article>
+        </section>
+
+        <!-- PROGRAMME -->
+        <section id="my-programme" class="page-section" hidden>
+            <article class="panel full-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>My Programme</h2>
+                        <p>Review the course and optional examination saved to your account.</p>
+                    </div>
+                    <span class="panel-symbol">▤</span>
+                </div>
+
+                <div class="programme-detail-card">
+                    <div class="programme-icon large-programme-icon">▤</div>
+                    <div>
+                        <span class="detail-overline">YOUR SELECTED COURSE</span>
+                        <h2 id="detailCourse">Loading...</h2>
+                        <p>This is the course recorded during your registration.</p>
+                    </div>
+                </div>
+
+                <div class="programme-detail-card exam-detail-card">
+                    <div class="programme-icon large-programme-icon exam-icon">☆</div>
+                    <div>
+                        <span class="detail-overline">OPTIONAL EXAMINATION</span>
+                        <h2 id="detailExam">Loading...</h2>
+                        <p id="detailExamDescription">Your saved examination selection.</p>
+                    </div>
+                </div>
+
+                <p class="information-note">
+                    If your course or exam selection is incorrect, contact the administrator
+                    before making any changes to your registration.
+                </p>
+            </article>
+        </section>
+
+        <!-- ACCOUNT -->
+        <section id="account" class="page-section" hidden>
+            <article class="panel full-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Account Status</h2>
+                        <p>Check your account verification information.</p>
+                    </div>
+                    <span class="panel-symbol">✓</span>
+                </div>
+
+                <div class="account-status-row">
+                    <div class="status-icon">✉</div>
+                    <div class="status-text">
+                        <h3>Email Verification</h3>
+                        <p>Your email address should be verified to keep your account in good standing.</p>
+                    </div>
+                    <span id="verificationBadge" class="status-badge">Checking...</span>
+                </div>
+
+                <div class="account-status-row">
+                    <div class="status-icon">♙</div>
+                    <div class="status-text">
+                        <h3>Account Role</h3>
+                        <p>Your account is registered as a student.</p>
+                    </div>
+                    <span id="accountRoleBadge" class="status-badge verified">Student</span>
+                </div>
+
+                <div id="accountMessage" class="information-note">
+                    Loading account status...
+                </div>
+            </article>
+        </section>
+
+        <!-- SECURITY AND CHANGE PASSWORD -->
+        <section id="security" class="page-section" hidden>
+            <article class="panel full-panel security-card">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Security & Password</h2>
+                        <p>Keep your FHOBS SOLUTIONS account secure.</p>
+                    </div>
+                    <span class="panel-symbol">🔒</span>
+                </div>
+
+                <p class="security-intro">
+                    Change your password by confirming your current password and entering
+                    your new password twice. Your password is sent securely to the server
+                    over your existing authenticated session.
+                </p>
+
+                <div id="passwordMessage"
+                     class="security-notice"
+                     role="status"
+                     aria-live="polite"></div>
+
+                <form id="changePasswordForm" class="password-form">
+                    <div class="password-field">
+                        <label for="currentPassword">Current Password</label>
+                        <input
+                            type="password"
+                            id="currentPassword"
+                            name="currentPassword"
+                            autocomplete="current-password"
+                            required
+                        >
+                    </div>
+
+                    <div class="password-field">
+                        <label for="newPassword">New Password</label>
+                        <input
+                            type="password"
+                            id="newPassword"
+                            name="newPassword"
+                            autocomplete="new-password"
+                            minlength="8"
+                            maxlength="128"
+                            required
+                        >
+                        <p class="password-help">
+                            Use at least 8 characters, including at least one letter and one number.
+                        </p>
+                    </div>
+
+                    <div class="password-field">
+                        <label for="confirmPassword">Confirm New Password</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            autocomplete="new-password"
+                            minlength="8"
+                            maxlength="128"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" id="changePasswordBtn" class="password-submit">
+                        Change Password
+                    </button>
+                </form>
+
+                <div class="security-reminder">
+                    <strong>Security reminder:</strong> Never share your password with
+                    anyone. If you do not know your current password, use the Forgot
+                    Password option on the login page instead.
+                </div>
+            </article>
+        </section>
+
+        <footer class="footer">
+            <span>© <span id="year"></span> FHOBS SOLUTIONS</span>
+            <span>Learning. Growing. Succeeding.</span>
+        </footer>
+    </main>
+
+    <script src="/js/student-dashboard.js"></script>
+</body>
+</html>

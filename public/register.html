@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Registration | FHOBS SOLUTIONS</title>
+
+    <link rel="stylesheet" href="/css/register.css">
+
+    <style>
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-wrapper input {
+            box-sizing: border-box;
+            width: 100%;
+            padding-right: 48px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            border: none;
+            background: transparent;
+            color: #52657b;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .toggle-password svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .toggle-password:hover {
+            color: #102a43;
+        }
+
+        .toggle-password:focus-visible {
+            outline: 2px solid #2874a6;
+            outline-offset: 3px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="register-header">
+        <a href="index.html" class="brand">
+            <span class="brand-icon">F</span>
+            <span>
+                <strong>FHOBS SOLUTIONS</strong>
+                <small>Learning. Growing. Succeeding.</small>
+            </span>
+        </a>
+
+        <a href="index.html" class="back-link">Back to Home</a>
+    </header>
+
+    <main class="register-container">
+
+        <section class="register-intro">
+            <span class="eyebrow">JOIN OUR COMMUNITY</span>
+
+            <h1>Create Your Student Account</h1>
+
+            <p>
+                Register with FHOBS SOLUTIONS to get started.
+                Enter your details and select your preferred programme.
+            </p>
+
+            <div class="benefit">
+                <span class="check">✓</span>
+                <div>
+                    <strong>Secure Registration</strong>
+                    <p>Your account will be protected by authentication.</p>
+                </div>
+            </div>
+
+            <div class="benefit">
+                <span class="check">✓</span>
+                <div>
+                    <strong>Email Verification</strong>
+                    <p>Confirm your email address before logging in.</p>
+                </div>
+            </div>
+
+            <div class="benefit">
+                <span class="check">✓</span>
+                <div>
+                    <strong>Choose Your Programme</strong>
+                    <p>Select one course and optionally one exam preparation programme.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="register-card">
+
+            <div class="form-heading">
+                <h2>Student Registration</h2>
+                <p>Fill in the information below.</p>
+            </div>
+
+            <div
+                id="form-message"
+                class="form-message"
+                role="status"
+                aria-live="polite"
+            ></div>
+
+            <form id="register-form" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        placeholder="Enter your full name"
+                        autocomplete="name"
+                        required
+                        minlength="2"
+                    >
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="Enter phone number"
+                            autocomplete="tel"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+
+                        <div class="password-wrapper">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Create a password"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                aria-label="Show password"
+                                aria-pressed="false"
+                                data-target="password"
+                            >
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <small>Use at least 8 characters.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+
+                        <div class="password-wrapper">
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                placeholder="Repeat your password"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                aria-label="Show password"
+                                aria-pressed="false"
+                                data-target="confirmPassword"
+                            >
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="selectedCourse">Course *</label>
+
+                    <select
+                        id="selectedCourse"
+                        name="selectedCourse"
+                        required
+                    >
+                        <option value="">Choose one course</option>
+
+                        <option value="Computer Basics & Office Skills">
+                            Computer Basics &amp; Office Skills
+                        </option>
+
+                        <option value="Graphic Design & Digital Marketing">
+                            Graphic Design &amp; Digital Marketing
+                        </option>
+
+                        <option value="Web & Software Development">
+                            Web &amp; Software Development
+                        </option>
+
+                        <option value="Networking, Cybersecurity & IT Support">
+                            Networking, Cybersecurity &amp; IT Support
+                        </option>
+
+                        <option value="Data Analytics & Business">
+                            Data Analytics &amp; Business
+                        </option>
+
+                        <option value="Kids & Teens Tech">
+                            Kids &amp; Teens Tech
+                        </option>
+
+                        <option value="Healthcare Assistant Training">
+                            Healthcare Assistant Training
+                        </option>
+                    </select>
+
+                    <small>Select one course only.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="selectedExam">
+                        Exam Preparation (Optional)
+                    </label>
+
+                    <select id="selectedExam" name="selectedExam">
+                        <option value="">No exam preparation</option>
+                        <option value="IELTS Preparation">IELTS Preparation</option>
+                        <option value="TOEFL iBT Preparation">TOEFL iBT Preparation</option>
+                        <option value="PTE Academic Preparation">PTE Academic Preparation</option>
+                        <option value="GRE Preparation">GRE Preparation</option>
+                        <option value="GMAT Preparation">GMAT Preparation</option>
+                        <option value="SAT Preparation">SAT Preparation</option>
+                    </select>
+
+                    <small>Choose one exam if you are interested.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="passport">Passport Photograph</label>
+
+                    <input
+                        type="file"
+                        id="passport"
+                        name="passport"
+                        accept="image/jpeg,image/png,image/webp"
+                        required
+                    >
+
+                    <small>
+                        Choose a JPG, PNG, or WebP image. Maximum size: 2 MB.
+                    </small>
+
+                    <img
+                        id="passport-preview"
+                        class="passport-preview"
+                        alt="Passport photograph preview"
+                        hidden
+                    >
+                </div>
+
+                <input type="hidden" name="role" value="student">
+
+                <div class="terms">
+                    <input type="checkbox" id="terms" name="terms" required>
+
+                    <label for="terms">
+                        I agree to the terms and conditions.
+                    </label>
+                </div>
+
+                <button type="submit" id="register-button">
+                    Create Student Account
+                </button>
+
+            </form>
+
+            <p class="login-prompt">
+                Already have an account?
+                <a href="login.html">Log in here</a>
+            </p>
+
+        </section>
+
+    </main>
+
+    <footer class="register-footer">
+        &copy; <span id="year"></span> FHOBS SOLUTIONS. All rights reserved.
+    </footer>
+
+    <script src="/js/register.js"></script>
+    <script src="/js/password-toggle.js"></script>
+
+    <script>
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+    </script>
+
+</body>
+</html>

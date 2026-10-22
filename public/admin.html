@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FHOBS SOLUTIONS | Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/admin.css">
+    <script src="/js/admin.js" defer></script>
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">F</div>
+                <div>
+                    <h2>FHOBS</h2>
+                    <p>SOLUTIONS</p>
+                </div>
+            </div>
+
+            <p class="menu-label">MAIN MENU</p>
+
+            <nav>
+                <a href="/admin" class="nav-link active" id="dashboardNav">Dashboard</a>
+                <a href="#tutors" class="nav-link" data-filter="all">All Tutors</a>
+                <a href="#tutors" class="nav-link" data-filter="pending">Pending Tutors</a>
+                <a href="#tutors" class="nav-link" data-filter="rejected">Rejected Tutors</a>
+                <a href="#users" class="nav-link" id="usersNav">Users</a>
+                <a href="#account" class="nav-link" id="accountNav">My Account</a>
+            </nav>
+
+            <button id="logoutBtn" class="logout-btn" type="button">Log Out</button>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">ADMINISTRATION</p>
+                    <h1 id="pageHeading">Dashboard</h1>
+                    <p class="subtitle" id="pageSubtitle">Manage tutor registrations and approvals.</p>
+                </div>
+                <div class="admin-badge">
+                    <span class="admin-avatar" id="adminAvatar">A</span>
+                    <span>Administrator</span>
+                </div>
+            </header>
+
+            <div id="notice" class="notice" role="status" aria-live="polite"></div>
+
+            <!-- TUTOR MANAGEMENT -->
+            <section id="tutorsView">
+                <section class="summary-grid">
+                    <article class="summary-card">
+                        <p>Total Tutors</p><h2 id="totalTutors">0</h2><span>All registered tutors</span>
+                    </article>
+                    <article class="summary-card pending-card">
+                        <p>Pending Approval</p><h2 id="pendingTutors">0</h2><span>Awaiting your decision</span>
+                    </article>
+                    <article class="summary-card approved-card">
+                        <p>Approved Tutors</p><h2 id="approvedTutors">0</h2><span>Approved applications</span>
+                    </article>
+                    <article class="summary-card rejected-card">
+                        <p>Rejected Tutors</p><h2 id="rejectedTutors">0</h2><span>Rejected applications</span>
+                    </article>
+                </section>
+
+                <section class="tutors-section" id="tutors">
+                    <div class="section-heading">
+                        <div><p class="eyebrow">TUTOR MANAGEMENT</p><h2 id="tableTitle">All Tutors</h2></div>
+                        <button id="refreshBtn" class="refresh-btn" type="button">Refresh List</button>
+                    </div>
+                    <div class="table-tools">
+                        <input type="search" id="searchInput" placeholder="Search by name, email or subject..." aria-label="Search tutors">
+                        <select id="statusFilter" aria-label="Filter tutors">
+                            <option value="all">All Tutors</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead><tr><th>Tutor</th><th>Subject</th><th>Email Status</th><th>Approval Status</th><th>Actions</th></tr></thead>
+                            <tbody id="tutorTableBody"><tr><td colspan="5" class="empty-state">Loading tutors...</td></tr></tbody>
+                        </table>
+                    </div>
+                    <p class="table-note">Tutor approval is allowed only after email verification.</p>
+                </section>
+            </section>
+
+            <!-- USER MANAGEMENT -->
+            <section id="usersView" hidden>
+                <section class="summary-grid">
+                    <article class="summary-card"><p>Total Accounts</p><h2 id="totalUsers">0</h2><span>All registered accounts</span></article>
+                    <article class="summary-card"><p>Students</p><h2 id="studentCount">0</h2><span>Student accounts</span></article>
+                    <article class="summary-card"><p>Tutors</p><h2 id="userTutorCount">0</h2><span>Tutor accounts</span></article>
+                    <article class="summary-card"><p>Administrators</p><h2 id="adminCount">0</h2><span>Administrator accounts</span></article>
+                </section>
+
+                <section class="tutors-section">
+                    <div class="section-heading">
+                        <div><p class="eyebrow">ACCOUNT MANAGEMENT</p><h2>Registered Users</h2></div>
+                        <button id="refreshUsersBtn" class="refresh-btn" type="button">Refresh Users</button>
+                    </div>
+                    <div class="table-tools">
+                        <input type="search" id="userSearchInput" placeholder="Search by name, email or phone..." aria-label="Search users">
+                        <select id="userRoleFilter" aria-label="Filter by role">
+                            <option value="all">All Roles</option>
+                            <option value="student">Students</option>
+                            <option value="tutor">Tutors</option>
+                            <option value="admin">Administrators</option>
+                        </select>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>Email Status</th><th>Registered</th><th>Actions</th></tr></thead>
+                            <tbody id="userTableBody"><tr><td colspan="7" class="empty-state">Open Users to load accounts.</td></tr></tbody>
+                        </table>
+                    </div>
+                    <p class="table-note">Passwords and authentication tokens are never displayed.</p>
+                </section>
+            </section>
+
+            <!-- ADMIN ACCOUNT -->
+            <section id="accountView" hidden>
+                <section class="tutors-section account-section">
+                    <p class="eyebrow">PERSONAL DETAILS</p>
+                    <h2>My Account</h2>
+                    <p class="table-note">Update your administrator profile. If you change your email, you must verify the new address.</p>
+
+                    <form id="adminProfileForm" class="admin-form">
+                        <label for="adminFullName">Full name</label>
+                        <input id="adminFullName" name="fullName" required minlength="2" maxlength="100">
+
+                        <label for="adminEmail">Email address</label>
+                        <input id="adminEmail" name="email" type="email" required maxlength="254">
+
+                        <label for="adminPhone">Phone number</label>
+                        <input id="adminPhone" name="phone" required minlength="7" maxlength="30">
+
+                        <button class="primary-btn" type="submit" id="saveProfileBtn">Save Profile</button>
+                    </form>
+                </section>
+
+                <section class="tutors-section account-section">
+                    <p class="eyebrow">ACCOUNT SECURITY</p>
+                    <h2>Change Password</h2>
+                    <p class="table-note">Enter your current password before choosing a new one.</p>
+
+                    <form id="adminPasswordForm" class="admin-form">
+                        <label for="adminCurrentPassword">Current password</label>
+                        <input id="adminCurrentPassword" name="currentPassword" type="password" autocomplete="current-password" required>
+
+                        <label for="adminNewPassword">New password</label>
+                        <input id="adminNewPassword" name="newPassword" type="password" minlength="8" maxlength="128" autocomplete="new-password" required>
+                        <small>Use 8–128 characters. Include at least one letter and one number.</small>
+
+                        <label for="adminConfirmPassword">Confirm new password</label>
+                        <input id="adminConfirmPassword" name="confirmPassword" type="password" minlength="8" maxlength="128" autocomplete="new-password" required>
+
+                        <button class="primary-btn" type="submit" id="changeAdminPasswordBtn">Change Password</button>
+                    </form>
+                </section>
+            </section>
+        </main>
+    </div>
+
+    <!-- USER DETAILS / EDIT DIALOG -->
+    <dialog id="userDetailsDialog">
+        <div class="section-heading">
+            <h2 id="userDialogTitle">User Details</h2>
+            <button id="closeUserDetailsBtn" class="refresh-btn" type="button">Close</button>
+        </div>
+        <div id="userDetailsContent"></div>
+    </dialog>
+</body>
+</html>

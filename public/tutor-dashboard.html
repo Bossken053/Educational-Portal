@@ -1,0 +1,406 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tutor Dashboard | FHOBS SOLUTIONS</title>
+
+    <link rel="stylesheet" href="css/tutor-dashboard.css">
+
+    <style>
+        .students-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .students-count {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #eef4ff;
+            color: #183b72;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .students-table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid #e3e8ef;
+            border-radius: 12px;
+        }
+
+        .students-table {
+            width: 100%;
+            min-width: 750px;
+            border-collapse: collapse;
+            background: #fff;
+        }
+
+        .students-table th,
+        .students-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e8edf3;
+            font-size: 14px;
+        }
+
+        .students-table th {
+            background: #f3f6fb;
+            color: #263b59;
+            font-weight: 700;
+        }
+
+        .students-table tbody tr:hover {
+            background: #f8faff;
+        }
+
+        .students-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .student-name {
+            font-weight: 700;
+            color: #203653;
+        }
+
+        .student-course {
+            color: #345b91;
+        }
+
+        .students-message {
+            padding: 20px;
+            border-radius: 10px;
+            background: #f5f7fb;
+            color: #46566b;
+            margin-top: 12px;
+        }
+
+        .students-error {
+            background: #fff0f0;
+            color: #9b2525;
+        }
+
+        .students-loading {
+            text-align: center;
+        }
+
+        .students-refresh {
+            cursor: pointer;
+        }
+
+        @media (max-width: 600px) {
+            .students-toolbar {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .students-toolbar button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <a href="index.html" class="brand">
+            <span class="brand-icon">F</span>
+            <span>
+                <strong>FHOBS SOLUTIONS</strong>
+                <small>Learning. Growing. Succeeding.</small>
+            </span>
+        </a>
+
+        <nav class="navigation">
+            <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a href="#my-students" class="nav-link" data-section="my-students">
+                <span>♙</span> My Students
+            </a>
+
+            <a href="#profile" class="nav-link" data-section="profile">
+                <span>♙</span> My Profile
+            </a>
+
+            <a href="#account-status" class="nav-link" data-section="account-status">
+                <span>✓</span> Account Status
+            </a>
+        </nav>
+
+        <button type="button" id="logoutBtn" class="logout-btn">
+            ↪ Log Out
+        </button>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <button type="button" id="menuBtn" class="menu-btn"
+                    aria-label="Toggle navigation">☰</button>
+
+            <div>
+                <h1 id="pageHeading">Tutor Dashboard</h1>
+                <p>Manage your FHOBS SOLUTIONS tutor account.</p>
+            </div>
+        </header>
+
+        <div id="notice" class="notice" role="status"
+             aria-live="polite" hidden></div>
+
+        <!-- DASHBOARD -->
+        <section id="dashboard" class="page-section">
+            <div class="welcome-card">
+                <div>
+                    <span class="eyebrow">TUTOR PORTAL</span>
+                    <h2>Welcome, <span id="welcomeName">Tutor</span>!</h2>
+                    <p>View your personal information and tutor account status here.</p>
+                </div>
+
+                <div class="welcome-avatar" id="welcomeInitials">T</div>
+            </div>
+
+            <div class="summary-grid">
+                <article class="summary-card">
+                    <span class="summary-label">Email Verification</span>
+                    <strong id="emailSummary">Loading...</strong>
+                    <span class="summary-description">Registered email status</span>
+                </article>
+
+                <article class="summary-card">
+                    <span class="summary-label">Tutor Approval</span>
+                    <strong id="approvalSummary">Loading...</strong>
+                    <span class="summary-description">Administrator review status</span>
+                </article>
+
+                <article class="summary-card">
+                    <span class="summary-label">Teaching Subject</span>
+                    <strong id="subjectSummary">Loading...</strong>
+                    <span class="summary-description">Your area of specialization</span>
+                </article>
+
+                <article class="summary-card">
+                    <span class="summary-label">My Students</span>
+                    <strong id="studentCountSummary">Loading...</strong>
+                    <span class="summary-description">Students in your course</span>
+                    <button type="button" id="viewStudentsBtn" class="secondary-btn">
+                        View Students
+                    </button>
+                </article>
+            </div>
+
+            <article class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Profile Overview</h2>
+                        <p>Your registered tutor information.</p>
+                    </div>
+
+                    <button type="button" id="refreshBtn" class="secondary-btn">
+                        Refresh
+                    </button>
+                </div>
+
+                <div class="profile-overview">
+                    <div class="passport-container">
+                        <img id="passportImage" alt="Tutor passport photograph" hidden>
+                        <div id="passportFallback" class="passport-fallback">T</div>
+                    </div>
+
+                    <div class="overview-details">
+                        <h3 id="profileName">Loading profile...</h3>
+                        <p id="profileEmail">Loading email...</p>
+                        <span id="roleBadge" class="badge">Tutor</span>
+                    </div>
+                </div>
+
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span>Full Name</span>
+                        <strong id="fullName">Loading...</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Email Address</span>
+                        <strong id="email">Loading...</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Phone Number</span>
+                        <strong id="phone">Loading...</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Teaching Subject</span>
+                        <strong id="subject">Loading...</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Account Created</span>
+                        <strong id="createdAt">Loading...</strong>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- MY STUDENTS -->
+        <section id="my-students" class="page-section" hidden>
+            <article class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>My Students</h2>
+                        <p>Students registered for your teaching course.</p>
+                    </div>
+                </div>
+
+                <div class="students-toolbar">
+                    <div class="students-count">
+                        Total Students:
+                        <span id="studentCount">0</span>
+                    </div>
+
+                    <button
+                        type="button"
+                        id="refreshStudentsBtn"
+                        class="secondary-btn students-refresh"
+                    >
+                        Refresh Students
+                    </button>
+                </div>
+
+                <div id="studentsMessage" class="students-message students-loading"
+                     role="status" aria-live="polite">
+                    Loading students...
+                </div>
+
+                <div class="students-table-wrapper" id="studentsTableWrapper" hidden>
+                    <table class="students-table">
+                        <thead>
+                            <tr>
+                                <th>S/N</th>
+                                <th>Student Name</th>
+                                <th>Email Address</th>
+                                <th>Phone Number</th>
+                                <th>Selected Course</th>
+                                <th>Selected Exam</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="studentsTableBody"></tbody>
+                    </table>
+                </div>
+            </article>
+        </section>
+
+        <!-- PROFILE -->
+        <section id="profile" class="page-section" hidden>
+            <article class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>My Profile</h2>
+                        <p>Review the information saved during registration.</p>
+                    </div>
+                </div>
+
+                <div class="profile-overview">
+                    <div class="passport-container">
+                        <img id="profilePassportImage" alt="Tutor passport photograph" hidden>
+                        <div id="profilePassportFallback" class="passport-fallback">T</div>
+                    </div>
+
+                    <div class="overview-details">
+                        <h3 id="profilePageName">Loading...</h3>
+                        <p id="profilePageEmail">Loading...</p>
+                    </div>
+                </div>
+
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span>Full Name</span>
+                        <strong id="profileFullName">Loading...</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Email</span>
+                        <strong id="profileEmailAddress">Loading...</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Phone</span>
+                        <strong id="profilePhone">Loading...</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Subject</span>
+                        <strong id="profileSubject">Loading...</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Role</span>
+                        <strong id="profileRole">Tutor</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Registered On</span>
+                        <strong id="profileCreatedAt">Loading...</strong>
+                    </div>
+                </div>
+
+                <p class="info-note">
+                    To change your registered information, contact the FHOBS SOLUTIONS
+                    administrator. Password recovery can be added to this dashboard
+                    in the next step.
+                </p>
+            </article>
+        </section>
+
+        <!-- ACCOUNT STATUS -->
+        <section id="account-status" class="page-section" hidden>
+            <article class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Account Status</h2>
+                        <p>Check the verification and approval requirements for your account.</p>
+                    </div>
+                </div>
+
+                <div class="status-row">
+                    <div>
+                        <h3>Email Verification</h3>
+                        <p>Your registered email address must be verified.</p>
+                    </div>
+
+                    <span id="verificationBadge" class="badge">Checking...</span>
+                </div>
+
+                <div class="status-row">
+                    <div>
+                        <h3>Tutor Approval</h3>
+                        <p>An administrator reviews tutor registrations.</p>
+                    </div>
+
+                    <span id="approvalBadge" class="badge">Checking...</span>
+                </div>
+
+                <div id="approvalMessage" class="info-note">
+                    Loading account status...
+                </div>
+            </article>
+        </section>
+
+        <footer class="footer">
+            &copy; <span id="year"></span> FHOBS SOLUTIONS. All rights reserved.
+        </footer>
+    </main>
+
+    <script src="js/tutor-dashboard.js"></script>
+</body>
+</html>

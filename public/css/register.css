@@ -1,0 +1,397 @@
+
+:root {
+    --primary: #102a56;
+    --secondary: #1769d2;
+    --background: #f4f7fc;
+    --white: #ffffff;
+    --text: #26364b;
+    --muted: #718096;
+    --border: #dce4ef;
+    --success: #15803d;
+    --danger: #b91c1c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+}
+
+.register-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 7%;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--primary);
+}
+
+.brand-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary);
+    color: var(--white);
+    border-radius: 11px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.brand strong,
+.brand small {
+    display: block;
+}
+
+.brand strong {
+    font-size: 18px;
+}
+
+.brand small {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.back-link {
+    color: var(--secondary);
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.register-container {
+    width: min(1120px, 90%);
+    margin: 55px auto;
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    align-items: center;
+    gap: 55px;
+}
+
+.register-intro .eyebrow {
+    color: var(--secondary);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.register-intro h1 {
+    margin: 18px 0;
+    color: var(--primary);
+    font-size: clamp(32px, 4vw, 45px);
+    line-height: 1.2;
+}
+
+.register-intro > p {
+    margin-bottom: 30px;
+    color: var(--muted);
+}
+
+.benefit {
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+    margin: 24px 0;
+}
+
+.check {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #dff5e7;
+    color: var(--success);
+    font-weight: bold;
+}
+
+.benefit strong {
+    color: var(--primary);
+}
+
+.benefit p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.register-card {
+    padding: 35px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 15px 45px rgba(16, 42, 86, 0.07);
+}
+
+.form-heading {
+    margin-bottom: 25px;
+}
+
+.form-heading h2 {
+    color: var(--primary);
+    font-size: 25px;
+}
+
+.form-heading p {
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.form-group {
+    margin-bottom: 19px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    background: var(--white);
+    color: var(--text);
+    font: inherit;
+    font-size: 13px;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 3px rgba(23, 105, 210, 0.10);
+}
+
+.form-group input[type="file"] {
+    padding: 10px;
+    background: #f9fbff;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.passport-preview {
+    width: 100px;
+    height: 110px;
+    margin-top: 12px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.terms {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    margin: 5px 0 22px;
+}
+
+.terms input {
+    margin-top: 5px;
+    accent-color: var(--secondary);
+}
+
+.terms label {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+#register-button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 7px;
+    background: var(--secondary);
+    color: var(--white);
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#register-button:hover {
+    background: var(--primary);
+}
+
+#register-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.form-message {
+    display: none;
+    margin-bottom: 18px;
+    padding: 12px;
+    border-radius: 7px;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.form-message.success {
+    display: block;
+    color: #166534;
+    background: #dcfce7;
+}
+
+.form-message.error {
+    display: block;
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+.login-prompt {
+    margin-top: 22px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.login-prompt a {
+    color: var(--secondary);
+    font-weight: bold;
+}
+
+.register-footer {
+    padding: 25px 15px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+@media (max-width: 850px) {
+    .register-container {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        margin: 35px auto;
+    }
+
+    .register-intro {
+        text-align: center;
+    }
+
+    .benefit {
+        text-align: left;
+        max-width: 390px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 520px) {
+    .register-header {
+        padding: 15px 5%;
+    }
+
+    .brand strong {
+        font-size: 14px;
+    }
+
+    .brand small {
+        font-size: 10px;
+    }
+
+    .brand-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .back-link {
+        font-size: 12px;
+    }
+
+    .register-container {
+        width: 92%;
+    }
+
+    .register-card {
+        padding: 22px 17px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 48px;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border: none;
+    background: transparent;
+    color: #52657b;
+    cursor: pointer;
+}
+
+.toggle-password:hover {
+    color: #102a43;
+    background: transparent;
+}
+
+.toggle-password svg {
+    width: 21px;
+    height: 21px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.toggle-password:focus-visible {
+    outline: 2px solid #2874a6;
+    outline-offset: 3px;
+    border-radius: 4px;
+}

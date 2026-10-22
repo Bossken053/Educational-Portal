@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resend Verification | FHOBS SOLUTIONS</title>
+    <link rel="stylesheet" href="css/verify-email.css">
+    <script src="js/resend-verification.js" defer></script>
+</head>
+<body>
+    <main class="verify-card">
+        <h1>FHOBS SOLUTIONS</h1>
+        <h2>Resend Verification Email</h2>
+
+        <p>Enter your registered email address to request a new link.</p>
+
+        <form id="resendForm">
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email address"
+                autocomplete="email"
+                required
+                style="width:100%;padding:12px;margin:12px 0"
+            >
+
+            <button type="submit">Send New Link</button>
+        </form>
+
+        <p id="message" role="status" aria-live="polite"></p>
+
+        <a href="login.html">Back to Login</a>
+    </main>
+</body>
+</html>
